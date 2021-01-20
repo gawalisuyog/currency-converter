@@ -1,10 +1,6 @@
 package com.arvato.finance.currencyconverter.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class Query {
 
@@ -14,6 +10,7 @@ class Query {
     private String to;
     @JsonProperty("amount")
     private Integer amount;
+
     @JsonProperty("from")
     public String getFrom() {
         return from;

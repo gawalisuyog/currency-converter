@@ -1,8 +1,14 @@
 package com.arvato.finance.currencyconverter.model;
 
-public class Request {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class CurrencyConversionInput {
+
+    @JsonProperty("currency1")
     private String currency1;
+    @JsonProperty("currency2")
     private String currency2;
+    @JsonProperty("amount")
     private String amount;
 
     public String getCurrency2() {
