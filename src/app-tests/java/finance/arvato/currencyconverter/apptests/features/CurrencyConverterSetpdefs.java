@@ -3,11 +3,13 @@ package finance.arvato.currencyconverter.apptests.features;
 import finance.arvato.currencyconverter.apptests.util.CurrencyConverterUtil;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static finance.arvato.currencyconverter.apptests.util.AssertUtil.verifyAttributes;
@@ -21,9 +23,26 @@ public class CurrencyConverterSetpdefs {
     String amount;
     Response response;
 
-    @When("convert below listed currencies")
-    public void convertBelowListedCurrencies(DataTable dataTable) {
-        Map<String, String> requestBody = dataTable.asMap(String.class, String.class);
+    @Given("Base currency is {string}")
+    public void setBaseCurrency(String baseCurrency) {
+        currency1 = baseCurrency;
+    }
+
+    @And("Target currency is {string}")
+    public void setTargetCurrency(String targetCurrency) {
+        currency2 = targetCurrency;
+    }
+
+    @When("I convert amount {string}")
+    public void iConvertAmount(String amount) {
+        this.amount = amount;
+
+        Map<String, String> requestBody = new HashMap<>();
+
+        requestBody.put("currency1", currency1);
+        requestBody.put("currency2", currency2);
+        requestBody.put("amount", amount);
+
         response = CurrencyConverterUtil.convertCurrencies(getBaseCurrencyConverterAppURL(), requestBody);
     }
 

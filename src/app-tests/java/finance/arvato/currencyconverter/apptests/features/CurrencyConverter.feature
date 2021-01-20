@@ -1,71 +1,87 @@
-Feature: Card Configuration integration
+Feature: Currency Conversion
 
   @Test
-  Scenario: verify if the currency conversion is successful
-    When convert below listed currencies
-      | currency1 | NOK |
-      | currency2 | INR |
-      | amount    | 100 |
+  Scenario Outline: verify if the currency conversion is successful
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then conversion is successful
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       | INR       | 100    |
 
   @Test
-  Scenario: verify if the attributes returned in the response are correct
-    When convert below listed currencies
-      | currency1 | NOK |
-      | currency2 | INR |
-      | amount    | 100 |
+  Scenario Outline: verify if the attributes returned in the response are correct
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then conversion is successful
     And The attributes received in the response body are correct
       | from   | NOK |
       | to     | INR |
       | amount | 100 |
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       | INR       | 100    |
 
   @Test
-  Scenario: Verify Bad request error when currency1 == invalid
-    When convert below listed currencies
-      | currency1 | invalid |
-      | currency2 | INR     |
-      | amount    | 100     |
+  Scenario Outline: Verify Bad request error when currency1 == invalid
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      | invalid   | INR       | 100    |
 
   @Test
-  Scenario: Verify Bad request error when currency2 == invalid
-    When convert below listed currencies
-      | currency1 | NOK     |
-      | currency2 | invalid |
-      | amount    | 100     |
+  Scenario Outline: Verify Bad request error when currency2 == invalid
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       | invalid   | 100    |
 
   @Test
-  Scenario: Verify Bad request error when amount == null
-    When convert below listed currencies
-      | currency1 | NOK |
-      | currency2 | INR |
-      | amount    |     |
+  Scenario Outline: Verify Bad request error when amount == null
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       | INR       |        |
 
   @Test
-  Scenario: Verify Bad request error when amount < 0
-    When convert below listed currencies
-      | currency1 | NOK  |
-      | currency2 | INR  |
-      | amount    | -100 |
+  Scenario Outline: Verify Bad request error when amount < 0
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       | INR       | -100   |
 
   @Test
-  Scenario: Verify Bad request error when currency1 == null
-    When convert below listed currencies
-      | currency1 |     |
-      | currency2 | INR |
-      | amount    | 100 |
+  Scenario Outline: Verify Bad request error when currency1 == null
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      |           | INR       | 100    |
 
   @Test
-  Scenario: Verify Bad request error when currency2 == null
-    When convert below listed currencies
-      | currency1 | NOK |
-      | currency2 |     |
-      | amount    | 100 |
+  Scenario Outline: Verify Bad request error when currency2 == null
+    Given Base currency is "<currency1>"
+    And Target currency is "<currency2>"
+    When I convert amount "<amount>"
     Then response code is 400
+    Examples:
+      | currency1 | currency2 | amount |
+      | NOK       |           | 100    |
 
 
